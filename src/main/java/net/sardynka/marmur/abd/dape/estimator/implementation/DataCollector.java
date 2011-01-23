@@ -114,6 +114,13 @@ public class DataCollector implements IDataCollector {
 				if (hddWriteSpeed>0){
 					estimatedCacheUsage -= hddWriteSpeed * msBetweenRefresh / 1000; 
 				}
+				
+				if (estimatedCacheUsage<0) estimatedCacheUsage=0;
+
+				log.debug("Simulation: [write speed: " + writeSpeed
+					           + " kBs][read speed: " + readSpeed 
+					           + " kBs][hdd write speed: " + hddWriteSpeed 
+					           + " kBs][estimated cache usage: " + estimatedCacheUsage + " KB]");
 			}
 		}, 0, msBetweenRefresh);
 	}
