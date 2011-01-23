@@ -52,6 +52,19 @@ public class WriteEstimationsTest {
 	}
 	
 	
+	public IDataCollector prepareDataMock2(long usedCache ){
+		IDataCollector dataCollector = mock(IDataCollector.class);
+		when(dataCollector.getUsedCacheSize()).thenReturn(new Long(usedCache*1024));
+
+		Map<String,Long> readSpeeds = new HashMap<String, Long>();
+		when(dataCollector.getReadSpeedPerHost()).thenReturn(readSpeeds);
+		
+		
+		Map<String,Long> writeSpeeds = new HashMap<String, Long>();
+		when(dataCollector.getWriteSpeedPerHost()).thenReturn(writeSpeeds);
+
+		return dataCollector;
+	}
 	
 	
 	
@@ -159,6 +172,79 @@ public class WriteEstimationsTest {
 		
 		//Then
 		Assert.assertEquals(81000, writeTime);
+	}
+	
+	
+	@Test
+	public void testWriteToCacheOnlyFromOnlyHost(){
+		//Given
+		/**
+		 * Free cache: 100MB (all)
+		 * Max speed: 10MBs
+		 * Max HDDs speed: 1MBs
+		 * 
+		 *  estimate 100MB write time for host 1 :
+		 *  	cache 100MB ->  10s ( 10 000ms)
+		 */
+		
+		IDataCollector dataCollector = prepareDataMock2(0);
+		Estimator estimator = prepareEstimator(dataCollector);
+
+		//When
+		long writeTime = estimator.getWriteEstimation("Host 1", 100 * 1024);
+		
+		//Then
+		Assert.assertEquals(10000, writeTime);
+	}
+	
+	@Test
+	public void testWriteToCacheAndHddFromOnlyHost(){
+		//Given
+		/**
+		 * Free cache: 100MB (all)
+		 * Max speed: 10MBs
+		 * Max HDDs speed: 1MBs
+		 * 
+		 *  estimate 200MB write time for host 1 :
+		 *  	cache 100MB ->  10s ( 10 000ms)
+		 *  	hdd   100MB -> 100s (100 000ms)
+		 *  ----------------------------------------
+		 *                           110 000ms
+		 */
+		
+		IDataCollector dataCollector = prepareDataMock2(0);
+		Estimator estimator = prepareEstimator(dataCollector);
+
+		//When
+		long writeTime = estimator.getWriteEstimation("Host 1", 200 * 1024);
+		
+		//Then
+		Assert.assertEquals(110000, writeTime);
+	}
+	
+	
+	@Test
+	public void testWriteFromOnlyHostWithFullCache(){
+		//Given
+		/**
+		 * Free cache: 0MB
+		 * Max speed: 10MBs
+		 * Max HDDs speed: 1MBs
+		 * 
+		 *  estimate 100MB write time for host 1 :
+		 *  	hdd   100MB -> 100s (100 000ms)
+		 *  ----------------------------------------
+		 *                           100 000ms
+		 */
+		
+		IDataCollector dataCollector = prepareDataMock2(100);
+		Estimator estimator = prepareEstimator(dataCollector);
+
+		//When
+		long writeTime = estimator.getWriteEstimation("Host 1", 100 * 1024);
+		
+		//Then
+		Assert.assertEquals(100000, writeTime);
 	}
 
 }
