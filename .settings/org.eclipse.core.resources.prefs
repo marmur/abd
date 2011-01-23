@@ -1,5 +1,6 @@
-#Sat Jan 22 16:39:51 CET 2011
+#Sat Jan 22 17:21:37 CET 2011
 eclipse.preferences.version=1
 encoding//res/configuration.properties=UTF-8
+encoding//src/main/java/net/sardynka/marmur/abd/dape/estimator/implementation/EstimatorBuilder.java=UTF-8
 encoding//src/main/java/net/sardynka/marmur/abd/dape/estimator/interfaces/IDataCollector.java=UTF-8
 encoding//src/main/java/net/sardynka/marmur/abd/dape/estimator/interfaces/IEstimator.java=UTF-8

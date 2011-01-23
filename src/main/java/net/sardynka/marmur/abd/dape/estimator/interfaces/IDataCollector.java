@@ -1,5 +1,7 @@
 package net.sardynka.marmur.abd.dape.estimator.interfaces;
 
+import java.util.Map;
+
 public interface IDataCollector {
 	/**
 	 * 
@@ -8,4 +10,10 @@ public interface IDataCollector {
 	 * @param KBred - ilość danych odczytanych z macierzy [KB]
 	 */
 	public void pushUpdateData(String host, long KBwritten, long KBred);
+	
+	
+	
+	public long getUsedCacheSize();
+	public Map<String,Long> getWriteSpeedPerHost();
+	public Map<String,Long> getReadSpeedPerHost();
 }

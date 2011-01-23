@@ -18,4 +18,6 @@ public interface IEstimator {
 	 * @return - czas zapisu pliku (do urządzenia, czyli m.in. do cache'a macierzy) [ms]
 	 */
 	public long getWriteEstimation(String host, long fileSize);
+
+	public IDataCollector getDataCollector();
 }
