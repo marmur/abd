@@ -113,8 +113,12 @@ public class Estimator implements IEstimator {
 	
 
 	public long getReadEstimation(String host, long fileSize) {
-		// TODO Auto-generated method stub
-		return 0;
+		Map<String,Long> writeSpeedPerHost = dataCollector.getWriteSpeedPerHost();
+		Map<String,Long> readSpeedPerHost = dataCollector.getReadSpeedPerHost();
+		
+		MaxSppedDetails speedDetails = getMaximalSpeedForHost(arrayHddsMaxSpeed, readSpeedPerHost, writeSpeedPerHost, host);
+		
+		return (fileSize / speedDetails.maxSpeedForConnection) * 1000;
 	}
 	
 	
