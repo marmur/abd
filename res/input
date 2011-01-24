@@ -1,0 +1,9 @@
+#send, host, read, write
+send, Host1, 200,50
+send, Host2, 10, 15
+
+sleep, 1000
+
+#getRead, host, fileSize, expected, error (+/- 2%)
+getRead, Host2, 50, 20, 2
+getWrite, Host2, 10, 60, 2
