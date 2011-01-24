@@ -51,8 +51,17 @@ public class DataCollector implements IDataCollector {
 				long timeDelta = now - description.latestData;
 				double multiplier = (double)1000/(double)timeDelta;
 				
-				description.writeSpeed = Math.round(((description.writeSpeed * archiveDataWeight) + ( (1-archiveDataWeight) * KBwritten *multiplier)));
-				description.readSpeed =  Math.round(((description.readSpeed  * archiveDataWeight) + ( (1-archiveDataWeight) * KBred     *multiplier)));
+				if (KBwritten == 0){
+					description.writeSpeed = 0;
+				}else{
+					description.writeSpeed = Math.round(((description.writeSpeed * archiveDataWeight) + ( (1-archiveDataWeight) * KBwritten *multiplier)));
+				}
+				
+				if (KBred == 0){
+					description.readSpeed =0;
+				}else{
+					description.readSpeed =  Math.round(((description.readSpeed  * archiveDataWeight) + ( (1-archiveDataWeight) * KBred     *multiplier)));
+				}
 				description.latestData = now;
 				
 				ioOperationsDetails.put(host, description);				
