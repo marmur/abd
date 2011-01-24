@@ -154,7 +154,7 @@ public class Estimator implements IEstimator {
 
 	
 	public Estimator(long arrayMaxSpeed, long arrayHddsMaxSpeed, long arrayCacheSize){
-		//TODO:
+		this(arrayMaxSpeed, arrayHddsMaxSpeed, arrayCacheSize, new DataCollector(arrayHddsMaxSpeed, 1000, 0.2));
 	}
 
 	public Estimator(long arrayMaxSpeed, long arrayHddsMaxSpeed, long arrayCacheSize, IDataCollector dataCollector){
