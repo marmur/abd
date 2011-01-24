@@ -21,7 +21,7 @@ public class StorageServiceRest {
 
 	public StorageServiceRest() throws FileNotFoundException, IOException {
 		Properties props = new Properties();
-		props.load(new FileInputStream(new File("res/configuration.properties")));
+		props.load(StorageServiceRest.class.getClassLoader().getResourceAsStream("configuration.properties"));
 		ie = new EstimatorBuilder().setProperties(props).build();
 	}
 
