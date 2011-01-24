@@ -9,6 +9,11 @@
 	<url>http://maven.apache.org</url>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>${basedir}/res</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
