@@ -1,0 +1,30 @@
+#send, host, read, write
+send, Host1, 0,0
+send, Host2, 0,0
+
+sleep, 1000
+
+#getRead, host, fileSize, expected, error (+/- 2%)
+
+#
+# Free Cache = 100MB
+# Cache write rate = 0MB
+# Cache read rate = 0MB
+getRead, Host2, 10240, 10000, 2
+getWrite, Host2,10240,  1000, 2
+
+
+
+send, Host1, 0, 10240
+sleep, 5000
+
+# Free Cache = 35MB
+# Cache write rate = 8MBs
+# Cache read rate = 0MB
+getWrite, Host2, 10240, 2000,2
+getWrite, Host2, 102400, 146000,2
+
+
+
+send, Host1, 0,0
+send, Host2, 0,0
